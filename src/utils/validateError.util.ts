@@ -6,6 +6,10 @@ function validationError(errorType: any) {
       code: 204,
       message: "No Content",
     },
+    BAD_REQUEST: {
+      code: 400,
+      message: "Bad Request",
+    },
     UNAUTHORIZED: {
       code: 401,
       message: "Unauthorized",
