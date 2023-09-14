@@ -5,8 +5,8 @@
 ---
 
 :heavy_check_mark: create the package.json file with `pnpm init`  
-:heavy_check_mark: proceed to install the modules with `pnpm add express cors jsonwebtoken bcryptjs zod`  
-:heavy_check_mark: proceed to install the typescript dependencies with `pnpm add typescript ts-node-dev @types/express @types/cors @types/jsonwebtoken @types/bcryptjs -D`  
+:heavy_check_mark: proceed to install the modules with `pnpm add express cors jsonwebtoken bcryptjs cookie-parser ejs zod`  
+:heavy_check_mark: proceed to install the typescript dependencies with `pnpm add typescript ts-node-dev @types/express @types/cors @types/jsonwebtoken @types/bcryptjs @types/cookie-parser @types/ejs  -D`  
 :heavy_check_mark: create the tsconfig with `npx --init`  
 :heavy_check_mark: proceed to activate some tsconfig fields  
 &nbsp;&nbsp;&nbsp;&nbsp;replace `rootDir:""` with `rootDir:"./src"`  
@@ -20,4 +20,5 @@
 :heavy_check_mark: proceed to enable new configurations in tsconfig as `"experimentalDecorators": true`, `"strictPropertyInitialization": false` and `"emitDecoratorMetadata": true`
 
 [TypeORM](https://typeorm.io/ "TypeORM")  
+[EJS](https://ejs.co/#install "EJS")  
 readme created in: [Editor.md](https://pandao.github.io/editor.md/en.html "Editor.md")
