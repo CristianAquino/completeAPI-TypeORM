@@ -14,6 +14,10 @@ function validationError(errorType: any) {
       code: 401,
       message: "Unauthorized",
     },
+    ["StripeAuthenticationError"]: {
+      code: 401,
+      message: "Stripe Authentication Error",
+    },
     NOT_FOUND: {
       code: 404,
       message: "Not Found",

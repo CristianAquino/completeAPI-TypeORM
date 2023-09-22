@@ -7,7 +7,13 @@ function handleError(
   res: Response,
   next: NextFunction
 ) {
-  const { code, message } = validationError(error.message);
+  let errorMessage;
+  if (error instanceof Error) {
+    errorMessage = error.message;
+  } else {
+    errorMessage = error;
+  }
+  const { code, message } = validationError(errorMessage);
   res.status(code).send(message);
 }
 
