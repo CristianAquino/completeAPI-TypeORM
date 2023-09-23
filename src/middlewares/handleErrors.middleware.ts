@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { validationError } from "../utils";
+import { validationError, validationErrorStripe } from "../utils";
+import Stripe from "stripe";
 
 function handleError(
   error: Error,
@@ -7,14 +8,15 @@ function handleError(
   res: Response,
   next: NextFunction
 ) {
-  let errorMessage;
   if (error instanceof Error) {
-    errorMessage = error.message;
-  } else {
-    errorMessage = error;
+    const { code, message } = validationError(error.message);
+    return res.status(code).send(message);
   }
-  const { code, message } = validationError(errorMessage);
-  res.status(code).send(message);
+  if (error as Stripe.errors.StripeAPIError) {
+    const { code, message } = validationErrorStripe(error);
+    return res.status(code).send(message);
+  }
+  return res.status(500).send("SERVER ERROR");
 }
 
 export { handleError };
