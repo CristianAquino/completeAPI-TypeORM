@@ -1,7 +1,15 @@
 import { Router } from "express";
-import { allProducts } from "../controllers";
+import { allPrices, checkout } from "../controllers";
+import { schemaBodyValidate } from "../middlewares";
+import { checkoutSchema } from "../schemas";
 
 const stripeRoute = Router();
 
-stripeRoute.get("/all-products", allProducts);
+stripeRoute.get("/all-products", allPrices);
+stripeRoute.post(
+  "/create-checkout-session",
+  schemaBodyValidate(checkoutSchema),
+  checkout
+);
+
 export { stripeRoute };
