@@ -10,4 +10,8 @@ const productsSchema = z.object({
 
 const checkoutSchema = z.array(productsSchema);
 
-export { checkoutSchema };
+const idSchema = z.object({
+  id: z.string().nonempty("identificador requerido"),
+});
+
+export { checkoutSchema, idSchema };
