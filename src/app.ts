@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import { authRoute, stripeRoute, userRoute } from "./routes";
+import { authRoute, productRoute, stripeRoute, userRoute } from "./routes";
 import { handleError, logs } from "./middlewares";
 const app = express();
 
@@ -14,6 +14,7 @@ app.use(logs);
 // routes
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/product", productRoute);
 app.use("/api/v1/stripe", stripeRoute);
 
 // errors
