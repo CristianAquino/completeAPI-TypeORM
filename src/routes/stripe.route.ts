@@ -1,17 +1,9 @@
 import { Router } from "express";
-import { allPrices, checkout } from "../controllers";
-import { schemaBodyValidate, schemaParamsValidate } from "../middlewares";
-import { checkoutSchema, idSchema } from "../schemas";
+import { checkout, webhook } from "../controllers";
+import { checkoutSchema } from "../schemas";
+import { schemaBodyValidate } from "../middlewares";
 
 const stripeRoute = Router();
-
-// prices
-stripeRoute.get("/all-prices", allPrices);
-
-// products
-// stripeRoute.post("/create-product", createProduct);
-// stripeRoute.get("/all-products", allProducts);
-// stripeRoute.get("/product/:id", schemaParamsValidate(idSchema), productById);
 
 // checkout
 stripeRoute.post(
@@ -21,6 +13,6 @@ stripeRoute.post(
 );
 
 // webhook
-stripeRoute.post("/webhook", (req, res) => {});
+stripeRoute.post("/webhook", webhook);
 
 export { stripeRoute };
