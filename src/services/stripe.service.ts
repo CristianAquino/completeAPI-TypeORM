@@ -1,6 +1,7 @@
 import { Stripe } from "stripe";
 import { CheckoutType } from "../types";
 import { webhook } from "../controllers";
+import { Order } from "../entities";
 
 const { SECRET_KEY_STRIPE, WEBHOOK_ENDPOINT_SECRET } = process.env;
 
@@ -50,9 +51,9 @@ async function callCheckout(data: CheckoutType) {
 async function callWebhook(body: any, sig: any) {
   if (!stripe) throw new Error("NOT_FOUND");
   if (!WEBHOOK_ENDPOINT_SECRET) throw new Error("NOT_FOUND");
-  let event;
-  let data;
-  let eventType;
+  let event: any;
+  let data: any;
+  let eventType: any;
 
   event = stripe.webhooks.constructEvent(
     body,
@@ -63,9 +64,25 @@ async function callWebhook(body: any, sig: any) {
   data = event.data.object;
 
   if (eventType && eventType === "checkout.session.completed") {
+    // const customer = await stripe.customers.retrieve(data.customer);
+    // const order = await callAddOrder(customer, data);
+    // if (order !== "created order") throw new Error("NO_CONTENT");
     console.log("webhook");
   }
   return { message: "webhook" };
+}
+
+async function callAddOrder(customer: any, data: any) {
+  const items = JSON.parse(customer.metadata.products);
+
+  const order = new Order();
+  order.idCustomer = data.customer;
+  order.products = items;
+  order.subtotal = data.amount_subtotal;
+  order.total = data.amount_total;
+  await order.save();
+
+  return "created order";
 }
 
 export { callCheckout, callWebhook };
