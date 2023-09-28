@@ -39,6 +39,10 @@ function validationErrorStripe(errorType: any) {
       code: 500,
       message: "InvalidGrantError is raised when a specified code doesnt exist",
     },
+    StripeSignatureVerificationError: {
+      code: 500,
+      message: "Invalid signature",
+    },
   };
   return dataError[errorType];
 }
