@@ -1,4 +1,4 @@
-import { Router } from "express";
+import express, { Router } from "express";
 import { checkout, webhook } from "../controllers";
 import { checkoutSchema } from "../schemas";
 import { schemaBodyValidate } from "../middlewares";
@@ -13,6 +13,10 @@ stripeRoute.post(
 );
 
 // webhook
-stripeRoute.post("/webhook", webhook);
+stripeRoute.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  webhook
+);
 
 export { stripeRoute };
