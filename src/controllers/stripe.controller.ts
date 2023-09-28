@@ -21,8 +21,8 @@ async function webhook(req: Request, res: Response, next: NextFunction) {
   try {
     const { body } = req;
     const sig = req.headers["stripe-signature"];
-    await callWebhook(body, sig);
-    return res.send().end();
+    const response = await callWebhook(body, sig);
+    return res.status(200).json(response);
   } catch (error) {
     if (error instanceof Stripe.errors.StripeError) {
       return next(error.type);
