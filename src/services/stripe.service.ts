@@ -1,7 +1,8 @@
 import { Stripe } from "stripe";
 import { CheckoutType } from "../types";
+import { webhook } from "../controllers";
 
-const { SECRET_KEY_STRIPE } = process.env;
+const { SECRET_KEY_STRIPE, WEBHOOK_ENDPOINT_SECRET } = process.env;
 
 const stripe = new Stripe(SECRET_KEY_STRIPE as string, {
   apiVersion: "2023-08-16",
@@ -10,7 +11,13 @@ const stripe = new Stripe(SECRET_KEY_STRIPE as string, {
 // checkout
 async function callCheckout(data: CheckoutType) {
   if (!stripe) throw new Error("NOT_FOUND");
-  const { user, products } = data;
+  const customer = await stripe.customers.create({
+    metadata: {
+      products: JSON.stringify(data.products),
+    },
+  });
+  if (!customer) throw new Error("NO_CONTENT");
+  const { products } = data;
   const line_items = products.map((item: any) => ({
     price_data: {
       currency: "usd",
@@ -29,7 +36,6 @@ async function callCheckout(data: CheckoutType) {
 
   const session = await stripe.checkout.sessions.create({
     line_items,
-    customer_email: user.email,
     // mode: "subscription" solo si es un plan de suscripcion,
     mode: "payment",
     payment_method_types: ["card"],
@@ -41,4 +47,25 @@ async function callCheckout(data: CheckoutType) {
 }
 
 // webhook
-export { callCheckout };
+async function callWebhook(body: any, sig: any) {
+  if (!stripe) throw new Error("NOT_FOUND");
+  if (!WEBHOOK_ENDPOINT_SECRET) throw new Error("NOT_FOUND");
+  let event;
+  let data;
+  let eventType;
+
+  event = stripe.webhooks.constructEvent(
+    body,
+    sig,
+    WEBHOOK_ENDPOINT_SECRET as string
+  );
+  eventType = event.type;
+  data = event.data.object;
+
+  if (eventType && eventType === "checkout.session.completed") {
+    console.log("webhook");
+  }
+  return { message: "webhook" };
+}
+
+export { callCheckout, callWebhook };
