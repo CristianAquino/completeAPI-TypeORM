@@ -7,8 +7,15 @@ const app = express();
 
 // middlewars
 app.use(cors());
-app.use(express.raw({ type: "*/*" }));
-app.use(express.json());
+// app.use(express.raw({ type: "application/json" }));
+// app.use(express.json());
+app.use((req, res, next) => {
+  if (req.originalUrl.includes("/api/v1/stripe/webhook")) {
+    return next();
+  }
+  return express.json()(req, res, next);
+});
+
 app.use(cookieParser());
 app.use(logs);
 
