@@ -13,8 +13,8 @@ function handleError(
     return res.status(code).send(message);
   }
   if (error as Stripe.errors.StripeAPIError) {
-    const { code, message } = validationErrorStripe(error);
-    return res.status(code).send(message);
+    // const { code, message } = validationErrorStripe(error);
+    return res.status(500).send(error);
   }
   return res.status(500).send("SERVER ERROR");
 }

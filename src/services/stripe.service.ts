@@ -1,7 +1,6 @@
 import { Stripe } from "stripe";
-import { CheckoutType } from "../types";
-import { webhook } from "../controllers";
 import { Order } from "../entities";
+import { CheckoutType } from "../types";
 
 const { SECRET_KEY_STRIPE, WEBHOOK_ENDPOINT_SECRET } = process.env;
 
