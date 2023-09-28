@@ -10,9 +10,6 @@ const productsSchema = z.object({
 });
 
 const checkoutSchema = z.object({
-  user: z.object({
-    email: z.string().email("email invalido"),
-  }),
   products: z.array(productsSchema),
 });
 
