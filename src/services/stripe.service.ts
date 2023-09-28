@@ -48,6 +48,7 @@ async function callCheckout(data: CheckoutType) {
 
 // webhook
 async function callWebhook(body: any, sig: any) {
+  console.log(body, sig);
   if (!stripe) throw new Error("NOT_FOUND");
   if (!WEBHOOK_ENDPOINT_SECRET) throw new Error("NOT_FOUND");
   let event: any;
