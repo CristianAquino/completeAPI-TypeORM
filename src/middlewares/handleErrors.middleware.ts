@@ -13,9 +13,9 @@ function handleError(
     return res.status(code).send(message);
   }
   if (error as Stripe.errors.StripeAPIError) {
-    // const { code, message } = validationErrorStripe(error);
+    const { code, message } = validationErrorStripe(error);
     console.log(error);
-    return res.status(500).send(error);
+    return res.status(code).send(message);
   }
   return res.status(500).send("SERVER ERROR");
 }
