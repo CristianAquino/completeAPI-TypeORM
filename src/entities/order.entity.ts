@@ -3,13 +3,9 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinTable,
-  ManyToMany,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Product } from ".";
 
 @Entity("Order")
 class Order extends BaseEntity {
