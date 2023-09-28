@@ -37,6 +37,7 @@ async function callCheckout(data: CheckoutType) {
   const session = await stripe.checkout.sessions.create({
     line_items,
     // mode: "subscription" solo si es un plan de suscripcion,
+    customer: customer.id,
     mode: "payment",
     payment_method_types: ["card"],
     success_url: "https://personal-portfolio-chi-sandy.vercel.app/",
