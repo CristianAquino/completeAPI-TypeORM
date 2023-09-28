@@ -3,7 +3,13 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import { handleError, logs } from "./middlewares";
-import { authRoute, productRoute, stripeRoute, userRoute } from "./routes";
+import {
+  authRoute,
+  orderRoute,
+  productRoute,
+  stripeRoute,
+  userRoute,
+} from "./routes";
 const app = express();
 
 // middlewars
@@ -24,6 +30,7 @@ app.use(logs);
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/product", productRoute);
+app.use("/api/v1/order", orderRoute);
 app.use("/api/v1/stripe", stripeRoute);
 
 // errors
