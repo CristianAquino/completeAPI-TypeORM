@@ -1,8 +1,9 @@
-import express from "express";
-import cors from "cors";
+import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import { authRoute, productRoute, stripeRoute, userRoute } from "./routes";
+import cors from "cors";
+import express from "express";
 import { handleError, logs } from "./middlewares";
+import { authRoute, productRoute, stripeRoute, userRoute } from "./routes";
 const app = express();
 
 // middlewars
@@ -13,7 +14,7 @@ app.use((req, res, next) => {
   if (req.originalUrl.includes("/api/v1/stripe/webhook")) {
     return next();
   }
-  return express.json()(req, res, next);
+  return bodyParser.json()(req, res, next);
 });
 
 app.use(cookieParser());

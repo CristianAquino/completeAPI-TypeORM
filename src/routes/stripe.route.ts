@@ -1,7 +1,8 @@
-import express, { Router } from "express";
+import bodyParser from "body-parser";
+import { Router } from "express";
 import { checkout, webhook } from "../controllers";
-import { checkoutSchema } from "../schemas";
 import { schemaBodyValidate } from "../middlewares";
+import { checkoutSchema } from "../schemas";
 
 const stripeRoute = Router();
 
@@ -15,7 +16,7 @@ stripeRoute.post(
 // webhook
 stripeRoute.post(
   "/webhook",
-  express.raw({ type: "application/json" }),
+  bodyParser.raw({ type: "application/json" }),
   webhook
 );
 
