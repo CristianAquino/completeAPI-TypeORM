@@ -64,22 +64,30 @@ async function callWebhook(body: any, sig: any) {
   data = event.data.object;
 
   if (eventType && eventType === "checkout.session.completed") {
-    // const customer = await stripe.customers.retrieve(data.customer);
-    // const order = await callAddOrder(customer, data);
-    // if (order !== "created order") throw new Error("NO_CONTENT");
-    console.log("webhook");
+    const customer = await stripe.customers.retrieve(data.customer);
+    const order = await callAddOrder(customer, data);
+    if (order !== "created order") throw new Error("NO_CONTENT");
   }
-  return { message: "webhook" };
+  return { message: "created_webhook" };
 }
 
 async function callAddOrder(customer: any, data: any) {
   const items = JSON.parse(customer.metadata.products);
 
   const order = new Order();
-  order.idCustomer = data.customer;
+  order.idCustomer = data.id;
+  order.customerCountry = data.customer_details.address.country;
+  order.customerEmail = data.customer_details.email;
+  order.customerName = data.customer_details.name;
+  order.customerPaymentMethod = data.payment_method_types[0];
+  order.customerCurrency = data.currency;
   order.products = items;
   order.subtotal = data.amount_subtotal;
   order.total = data.amount_total;
+
+  if (data.payment_status !== "paid") {
+    return "order no pagada";
+  }
   await order.save();
 
   return "created order";

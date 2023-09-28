@@ -15,6 +15,21 @@ class Order extends BaseEntity {
   @Column()
   idCustomer: string;
 
+  @Column()
+  customerCountry: string;
+
+  @Column()
+  customerEmail: string;
+
+  @Column()
+  customerName: string;
+
+  @Column()
+  customerPaymentMethod: string;
+
+  @Column()
+  customerCurrency: string;
+
   @Column({ type: "float" })
   subtotal: number;
 
