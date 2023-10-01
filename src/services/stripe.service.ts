@@ -49,7 +49,6 @@ async function callCheckout(data: CheckoutType) {
 
 // webhook
 async function callWebhook(body: any, sig: any) {
-  console.log(body, sig);
   if (!stripe) throw new Error("NOT_FOUND");
   if (!WEBHOOK_ENDPOINT_SECRET) throw new Error("NOT_FOUND");
   let event: any;
@@ -68,7 +67,12 @@ async function callWebhook(body: any, sig: any) {
     const customer = await stripe.customers.retrieve(data.customer);
     const order = await callAddOrder(customer, data);
     if (typeof order === "string") throw new Error("NO_CONTENT");
-    sendEmail(order, order.customerEmail, "send-email-bill");
+    const sendEmailOk = await sendEmail(
+      JSON.stringify(order),
+      order.customerEmail,
+      "send-email-bill"
+    );
+    if (!sendEmailOk) throw new Error("NOT_IMPLEMENTED");
   }
 
   return { message: "created_webhook" };
@@ -78,8 +82,7 @@ async function callAddOrder(customer: any, data: any) {
   const items = JSON.parse(customer.metadata.products);
 
   const order = new Order();
-  // order.idCustomer = data.id;
-  order.idCustomer = customer.id;
+  order.idCustomer = data.id;
   order.customerCountry = data.customer_details.address.country;
   order.customerEmail = data.customer_details.email;
   order.customerName = data.customer_details.name;
