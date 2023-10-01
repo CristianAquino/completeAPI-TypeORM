@@ -19,7 +19,6 @@ async function callAddProduct(body: any) {
     const slugOfTitle = slug(product.name);
     products.name = product.name;
     products.unitPrice = product.unitPrice;
-    products.discountPercentage = product.discountPercentage;
     products.unitInStock = product.unitInStock;
     products.description = product.description;
     products.images = product.images;
