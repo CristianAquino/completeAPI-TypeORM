@@ -1,6 +1,7 @@
 import { Stripe } from "stripe";
 import { Order } from "../entities";
 import { CheckoutType } from "../types";
+import { sendEmail } from "../utils";
 
 const { SECRET_KEY_STRIPE, WEBHOOK_ENDPOINT_SECRET } = process.env;
 
@@ -13,12 +14,11 @@ async function callCheckout(data: CheckoutType) {
   if (!stripe) throw new Error("NOT_FOUND");
   const customer = await stripe.customers.create({
     metadata: {
-      products: JSON.stringify(data.products),
+      products: JSON.stringify(data),
     },
   });
   if (!customer) throw new Error("NO_CONTENT");
-  const { products } = data;
-  const line_items = products.map((item: any) => ({
+  const line_items = data.map((item: any) => ({
     price_data: {
       currency: "usd",
       product_data: {
@@ -67,8 +67,10 @@ async function callWebhook(body: any, sig: any) {
   if (eventType && eventType === "checkout.session.completed") {
     const customer = await stripe.customers.retrieve(data.customer);
     const order = await callAddOrder(customer, data);
-    if (order !== "created order") throw new Error("NO_CONTENT");
+    if (typeof order === "string") throw new Error("NO_CONTENT");
+    sendEmail(order, order.customerEmail, "send-email-bill");
   }
+
   return { message: "created_webhook" };
 }
 
@@ -76,7 +78,8 @@ async function callAddOrder(customer: any, data: any) {
   const items = JSON.parse(customer.metadata.products);
 
   const order = new Order();
-  order.idCustomer = data.id;
+  // order.idCustomer = data.id;
+  order.idCustomer = customer.id;
   order.customerCountry = data.customer_details.address.country;
   order.customerEmail = data.customer_details.email;
   order.customerName = data.customer_details.name;
@@ -91,7 +94,7 @@ async function callAddOrder(customer: any, data: any) {
   }
   await order.save();
 
-  return "created order";
+  return order;
 }
 
 export { callCheckout, callWebhook };
