@@ -1,0 +1,130 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "full-api-typeORM",
+    "dateExported": "2023-10-01T03:11:23.295Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "e963b5cf-489f-44e3-a686-7ce45cccc202",
+            "name": "stripe",
+            "containerId": "",
+            "created": "2023-09-23T20:03:00.268Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "67cd1be3-db0c-4b09-a05a-e65d3eb14bb1",
+            "name": "product",
+            "containerId": "",
+            "created": "2023-09-25T03:56:01.653Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "8da504d0-5501-4634-93a0-5e66288cbc40",
+            "name": "orders",
+            "containerId": "",
+            "created": "2023-09-28T23:16:40.495Z",
+            "sortNum": 30000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "17de4619-80f8-4b04-901b-6d3b6ca27918",
+            "colId": "f2a59259-f592-4210-a773-e293c0b89755",
+            "containerId": "e963b5cf-489f-44e3-a686-7ce45cccc202",
+            "name": "checkout",
+            "url": "http://localhost:3000/api/v1/stripe/create-checkout-session",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-09-24T02:04:56.456Z",
+            "modified": "2023-10-01T02:51:18.848Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "[\n  {\n    \"id\": \"83f50e1c-fc29-432d-a1fe-a41ca672acbb\",\n    \"name\": \"MacBook Pro II\",\n    \"marca\":\"IPhone\",\n    \"unitPrice\": 299.99,\n    \"description\": \"MacBook Pro II 2023 with mini-LED display may launch between September, November\",\n    \"image\": \"https://i.dummyjson.com/data/products/6/1.png\",\n    \"quantity\":1\n  }\n]",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "6c4c7dee-650a-44c6-a964-42580fc47966",
+            "colId": "f2a59259-f592-4210-a773-e293c0b89755",
+            "containerId": "67cd1be3-db0c-4b09-a05a-e65d3eb14bb1",
+            "name": "all-products",
+            "url": "http://localhost:3000/api/v1/product/all-products",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2023-09-25T03:56:08.943Z",
+            "modified": "2023-09-25T03:56:42.915Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "ce409c23-a230-41f5-a3a1-4303672d6268",
+            "colId": "f2a59259-f592-4210-a773-e293c0b89755",
+            "containerId": "67cd1be3-db0c-4b09-a05a-e65d3eb14bb1",
+            "name": "addProduct",
+            "url": "http://localhost:3000/api/v1/product/add-product",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2023-09-25T04:20:32.466Z",
+            "modified": "2023-09-28T04:59:33.126Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "[\n    {\n      \"name\": \"MacBook Pro I\",\n      \"description\": \"MacBook Pro I 2023 with mini-LED display may launch between September, November\",\n      \"brand\": \"Apple\",\n      \"category\": \"laptops\",\n      \"images\": [\n        \"https://i.dummyjson.com/data/products/6/1.png\",\n        \"https://i.dummyjson.com/data/products/6/2.jpg\",\n        \"https://i.dummyjson.com/data/products/6/3.png\",\n        \"https://i.dummyjson.com/data/products/6/4.jpg\"\n      ]\n    }\n  ]",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "6da5f525-d282-42a4-8c6e-f7e3d6061afc",
+            "colId": "f2a59259-f592-4210-a773-e293c0b89755",
+            "containerId": "67cd1be3-db0c-4b09-a05a-e65d3eb14bb1",
+            "name": "product",
+            "url": "http://localhost:3000/api/v1/product/macbook-pro-ii",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2023-09-25T05:09:16.563Z",
+            "modified": "2023-09-25T05:13:11.748Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "d38c329f-2e45-4cf1-af12-ca37519fc28b",
+            "colId": "f2a59259-f592-4210-a773-e293c0b89755",
+            "containerId": "67cd1be3-db0c-4b09-a05a-e65d3eb14bb1",
+            "name": "updateProduct",
+            "url": "http://localhost:3000/api/v1/product/update-product",
+            "method": "PUT",
+            "sortNum": 90000,
+            "created": "2023-09-25T05:23:15.510Z",
+            "modified": "2023-09-25T05:55:38.048Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\":\"83f50e1c-fc29-432d-a1fe-a41ca672acbb\",\n  \"unitPrice\":1\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "a40540bb-6756-4cd7-b2e0-8f06f30e9cb3",
+            "colId": "f2a59259-f592-4210-a773-e293c0b89755",
+            "containerId": "8da504d0-5501-4634-93a0-5e66288cbc40",
+            "name": "all-orders",
+            "url": "http://localhost:3000/api/v1/order/all-orders",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2023-09-28T23:16:53.778Z",
+            "modified": "2023-09-28T23:18:48.390Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}

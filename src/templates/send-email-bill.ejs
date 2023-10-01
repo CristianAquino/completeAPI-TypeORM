@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+      }
+      .content {
+        max-width: 1024px;
+        padding: 16px;
+        width: 100%;
+        height: auto;
+        border: 1px solid #c4c4c4;
+      }
+      header {
+        width: 100%;
+        height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #15dbff;
+      }
+      .icon {
+        width: 100px;
+        height: 100px;
+        background-color: #ffad48;
+        border-radius: 50%;
+      }
+      .message {
+        width: 100%;
+        height: auto;
+        padding: 16px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        border-bottom: 3px solid #15dbff;
+      }
+      .message h2 {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        text-transform: uppercase;
+      }
+      .message p {
+        font-size: 16px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+        line-height: 1.25;
+      }
+      section {
+        width: 100%;
+        height: 62px;
+        display: flex;
+        gap: 16px;
+      }
+      section .info {
+        width: 100%;
+        height: 100%;
+        background-color: #15dbff;
+        color: #fff;
+        font-size: 16px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-transform: capitalize;
+      }
+      section .info p:first-child {
+        font-weight: bold;
+      }
+      section .info p:last-child {
+        font-weight: normal;
+      }
+      .products {
+        padding: 16px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .products h2 {
+        font-size: 24px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+      .product {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #15dbff;
+        width: 100%;
+        height: 120px;
+        gap: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <% const recibido = JSON.parse(data) %>
+    <div class="content">
+      <header>
+        <div class="icon"></div>
+      </header>
+      <div class="message">
+        <h2>¡recibimos tu solicitud de compra!</h2>
+        <p>
+          Hola <b><%= recibido.customerName %></b>.<br />
+          Tu orden ha sido recibida y procesada. <br />
+          Este es un correo de verificación, en el cual detallamos todo lo
+          realcionado a tu compra.
+        </p>
+        <section>
+          <div class="info">
+            <p>cod. pedido</p>
+            <p><%= recibido.id %></p>
+          </div>
+          <div class="info">
+            <p>fecha de compra</p>
+            <p>
+              <% const d = new Date(recibido.createdAt);%>
+              <%=d.toLocaleString('es-MX',{dateStyle:'full'});%>
+            </p>
+          </div>
+        </section>
+      </div>
+      <div class="products">
+        <h2>productos solicitados</h2>
+        <% recibido.products.forEach((product)=>{ %>
+
+        <div class="product">
+          <div style="max-width: 112px; max-height: 120px; flex-grow: 1">
+            <img
+              src="<%= product.image %>"
+              alt="<%= product.name %>"
+              style="width: 100%; height: 100%; object-fit: contain"
+            />
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+              flex-grow: 2;
+            "
+          >
+            <h2
+              style="font-size: 16px; color: #4c6980; text-transform: uppercase"
+            >
+              <%= product.marca %>
+            </h2>
+            <p
+              style="
+                font-size: 24px;
+                font-weight: bold;
+                color: #002849;
+                text-transform: capitalize;
+                max-width: 600px;
+              "
+            >
+              <%= product.name %>
+            </p>
+          </div>
+          <span
+            style="
+              font-size: 16px;
+              font-weight: bold;
+              color: #0071ce;
+              text-transform: uppercase;
+              flex-grow: 1;
+            "
+            >s/. <%= product.unitPrice %></span
+          >
+          <span style="font-size: 16px; color: #002849; flex-grow: 1"
+            ><%= product.quantity %></span
+          >
+        </div>
+        <% })%>
+      </div>
+      <div
+        class="total"
+        style="
+          display: flex;
+          width: 100%;
+          justify-content: flex-end;
+          line-height: 1.3;
+          border-bottom: 3px solid #15dbff;
+          padding-bottom: 16px;
+        "
+      >
+        <div style="width: 30%">
+          <div style="display: flex; justify-content: space-between">
+            <span
+              style="
+                font-size: 16px;
+                font-weight: bold;
+                text-transform: capitalize;
+              "
+              >subtotal:</span
+            >
+            <span style="font-size: 16px; text-transform: uppercase"
+              >s/. <%= recibido.subtotal / 100 %></span
+            >
+          </div>
+          <div style="display: flex; justify-content: space-between">
+            <span
+              style="
+                font-size: 16px;
+                font-weight: bold;
+                text-transform: capitalize;
+              "
+              >descuento:</span
+            >
+            <span style="font-size: 16px; text-transform: uppercase"
+              >s/. <%= recibido.descuento / 100 %></span
+            >
+          </div>
+          <div style="display: flex; justify-content: space-between">
+            <span
+              style="
+                font-size: 16px;
+                font-weight: bold;
+                text-transform: capitalize;
+              "
+              >total:</span
+            >
+            <span
+              style="
+                font-size: 16px;
+                text-transform: uppercase;
+                font-weight: bold;
+              "
+              >s/. <%= recibido.total / 100 %></span
+            >
+          </div>
+        </div>
+      </div>
+      <div
+        class="customer"
+        style="
+          display: flex;
+          width: 100%;
+          padding: 16px 0;
+          flex-direction: column;
+          gap: 16px;
+          border-bottom: 3px solid #15dbff;
+        "
+      >
+        <h2
+          style="font-size: 24px; font-weight: bold; text-transform: uppercase"
+        >
+          datos del cliente
+        </h2>
+        <div style="display: flex; gap: 16px; width: 100%; line-height: 1.3">
+          <div style="width: 100%">
+            <div style="display: flex; justify-content: space-between">
+              <span
+                style="
+                  font-size: 16px;
+                  font-weight: bold;
+                  text-transform: capitalize;
+                "
+                >nombre:</span
+              >
+              <span style="font-size: 16px; text-transform: uppercase"
+                ><%= recibido.customerName %></span
+              >
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <span
+                style="
+                  font-size: 16px;
+                  font-weight: bold;
+                  text-transform: capitalize;
+                "
+                >email:</span
+              >
+              <span style="font-size: 16px"><%= recibido.customerEmail %></span>
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <span
+                style="
+                  font-size: 16px;
+                  font-weight: bold;
+                  text-transform: capitalize;
+                "
+                >nacionalidad:</span
+              >
+              <span style="font-size: 16px; text-transform: uppercase"
+                ><%= recibido.customerCountry %></span
+              >
+            </div>
+          </div>
+          <div style="width: 100%">
+            <div style="display: flex; justify-content: space-between">
+              <span
+                style="
+                  font-size: 16px;
+                  font-weight: bold;
+                  text-transform: capitalize;
+                "
+                >divisa:</span
+              >
+              <span style="font-size: 16px; text-transform: uppercase"
+                ><%= recibido.customerCurrency %></span
+              >
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <span
+                style="
+                  font-size: 16px;
+                  font-weight: bold;
+                  text-transform: capitalize;
+                "
+                >metodo de pago:</span
+              >
+              <span style="font-size: 16px"
+                ><%= recibido.customerPaymentMethod %></span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
