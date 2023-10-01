@@ -65,6 +65,7 @@ async function callWebhook(body: any, sig: any) {
 
   if (eventType && eventType === "checkout.session.completed") {
     const customer = await stripe.customers.retrieve(data.customer);
+    if (typeof !customer) throw new Error("NO_CONTENT");
     const order = await callAddOrder(customer, data);
     if (typeof order === "string") throw new Error("NO_CONTENT");
     const sendEmailOk = await sendEmail(
@@ -72,7 +73,7 @@ async function callWebhook(body: any, sig: any) {
       order.customerEmail,
       "send-email-bill"
     );
-    if (!sendEmailOk) throw new Error("NOT_IMPLEMENTED");
+    if (!sendEmailOk.id) throw new Error("NOT_IMPLEMENTED");
   }
 
   return { message: "created_webhook" };

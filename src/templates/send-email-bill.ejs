@@ -221,7 +221,8 @@
               >descuento:</span
             >
             <span style="font-size: 16px; text-transform: uppercase"
-              >s/. <%= recibido.descuento / 100 %></span
+              >s/. <%= recibido.discountPercentage * recibido.total / 10000
+              %></span
             >
           </div>
           <div style="display: flex; justify-content: space-between">
