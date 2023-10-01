@@ -24,9 +24,9 @@ async function webhook(req: Request, res: Response, next: NextFunction) {
     const response = await callWebhook(body, sig);
     return res.status(200).json(response);
   } catch (error) {
-    // if (error instanceof Stripe.errors.StripeError) {
-    //   return next(error.type);
-    // }
+    if (error instanceof Stripe.errors.StripeError) {
+      return next(error.type);
+    }
     return next(error);
   }
 }

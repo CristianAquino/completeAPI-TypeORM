@@ -73,7 +73,7 @@ async function callWebhook(body: any, sig: any) {
       order.customerEmail,
       "send-email-bill"
     );
-    // if (!sendEmailOk.id) throw new Error("NOT_IMPLEMENTED");
+    if (!sendEmailOk.id) throw new Error("NOT_IMPLEMENTED");
   }
 
   return { message: "created_webhook" };
