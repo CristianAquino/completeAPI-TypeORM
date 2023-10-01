@@ -27,7 +27,7 @@ const sendEmailBillData = {
   total: 100,
   descuento: 0,
   customerName: "web",
-  customerEmail: "asd@gmail.com",
+  customerEmail: "ycristiantest@gmail.com",
   customerCountry: "PE",
   customerCurrency: "usd",
   customerPaymentMethod: "card",
