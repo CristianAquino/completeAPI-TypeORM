@@ -16,7 +16,7 @@ stripeRoute.post(
 // webhook
 stripeRoute.post(
   "/webhook",
-  // bodyParser.raw({ type: "application/json" }),
+  bodyParser.raw({ type: "application/json" }),
   webhook
 );
 
