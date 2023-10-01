@@ -20,7 +20,7 @@ async function checkout(req: Request, res: Response, next: NextFunction) {
 async function webhook(req: Request, res: Response, next: NextFunction) {
   try {
     const { body } = req;
-    const sig = req.headers["stripe-signature"];
+    const sig = req.headers["Stripe-Signature"];
     const response = await callWebhook(body, sig);
     return res.status(200).json(response);
   } catch (error) {
