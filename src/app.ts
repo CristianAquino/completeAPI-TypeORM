@@ -20,8 +20,14 @@ app.use((req, res, next) => {
   if (req.originalUrl.includes("/api/v1/stripe/webhook")) {
     return next();
   }
-  return bodyParser.json()(req, res, next);
+  return express.json()(req, res, next);
 });
+// app.use((req, res, next) => {
+//   if (req.originalUrl.includes("/api/v1/stripe/webhook")) {
+//     return next();
+//   }
+//   return bodyParser.json()(req, res, next);
+// });
 app.use(cookieParser());
 app.use(logs);
 app.set("views", join(__dirname, "templates"));
