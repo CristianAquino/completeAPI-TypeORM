@@ -89,7 +89,7 @@ async function forgotUserPassword(email: string) {
   const user = await User.findOneBy({ email });
   if (!user) throw new Error("NOT_FOUND");
   const token = createToken({ id: user.id }, 60 * 60, SECRET_WORD_RESET);
-  const send = await sendEmail(token);
+  const send = await sendEmail(token, "ycristiantest@gmail.com", "sendEmail");
   if (!send) throw new Error("NOT_IMPLEMENTED");
   user.resetToken = token;
   await user.save();
