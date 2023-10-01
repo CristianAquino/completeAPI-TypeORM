@@ -23,9 +23,6 @@ class Product extends BaseEntity {
   @Column({ type: "float", default: 0 })
   unitPrice: number;
 
-  @Column({ type: "float", default: 0 })
-  discountPercentage: number;
-
   @Column({ type: "int", default: 0 })
   unitInStock: number;
 

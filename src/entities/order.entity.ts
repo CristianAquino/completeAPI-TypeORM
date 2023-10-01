@@ -30,6 +30,9 @@ class Order extends BaseEntity {
   @Column()
   customerCurrency: string;
 
+  @Column({ type: "float", default: 0 })
+  discountPercentage: number;
+
   @Column({ type: "float" })
   subtotal: number;
 
