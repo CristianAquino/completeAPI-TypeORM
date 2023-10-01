@@ -83,7 +83,7 @@ async function callAddOrder(customer: any, data: any) {
   const items = JSON.parse(customer.metadata.products);
 
   const order = new Order();
-  order.idCustomer = data.id;
+  order.idCustomer = data.customer;
   order.customerCountry = data.customer_details.address.country;
   order.customerEmail = data.customer_details.email;
   order.customerName = data.customer_details.name;
@@ -96,9 +96,9 @@ async function callAddOrder(customer: any, data: any) {
   if (data.payment_status !== "paid") {
     return "orden no pagada";
   }
-  await order.save();
+  const orderCreate = await order.save();
 
-  return order;
+  return orderCreate;
 }
 
 export { callCheckout, callWebhook };
