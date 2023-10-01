@@ -93,7 +93,7 @@ async function callAddOrder(customer: any, data: any) {
   order.total = data.amount_total;
 
   if (data.payment_status !== "paid") {
-    return "order no pagada";
+    return "orden no pagada";
   }
   await order.save();
 
