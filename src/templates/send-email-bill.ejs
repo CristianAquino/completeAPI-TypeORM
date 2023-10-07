@@ -10,7 +10,7 @@
         margin: 0;
         box-sizing: border-box;
       }
-      /* body {
+      body {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -102,142 +102,42 @@
         width: 100%;
         height: 120px;
         gap: 16px;
-      }*/
+      }
     </style>
   </head>
-  <body
-    style="
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-    "
-  >
+  <body>
     <% const recibido = JSON.parse(data) %>
-    <div
-      style="
-        max-width: 1024px;
-        padding: 16px;
-        width: 100%;
-        height: auto;
-        border: 1px solid #c4c4c4;
-      "
-    >
-      <header
-        style="
-          width: 100%;
-          height: 160px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background-color: #15dbff;
-        "
-      >
-        <div
-          style="
-            width: 100px;
-            height: 100px;
-            background-color: #ffad48;
-            border-radius: 50%;
-          "
-        ></div>
+    <div class="content">
+      <header>
+        <div class="icon"></div>
       </header>
-      <div
-        style="
-          width: 100%;
-          height: auto;
-          padding: 16px 0;
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-          border-bottom: 3px solid #15dbff;
-        "
-      >
-        <h2
-          style="
-            font-size: 24px;
-            font-weight: bold;
-            text-align: center;
-            text-transform: uppercase;
-          "
-        >
-          ¡recibimos tu solicitud de compra!
-        </h2>
-        <p
-          style="
-            font-size: 16px;
-            font-weight: 400;
-            text-transform: uppercase;
-            text-align: center;
-            line-height: 1.25;
-          "
-        >
+      <div class="message">
+        <h2>¡recibimos tu solicitud de compra!</h2>
+        <p>
           Hola <b><%= recibido.customerName %></b>.<br />
           Tu orden ha sido recibida y procesada. <br />
           Este es un correo de verificación, en el cual detallamos todo lo
           realcionado a tu compra.
         </p>
-        <section style="width: 100%; height: 62px; display: flex; gap: 16px">
-          <div
-            style="
-              width: 100%;
-              height: 100%;
-              background-color: #15dbff;
-              color: #fff;
-              font-size: 16px;
-              padding: 16px;
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              text-transform: capitalize;
-            "
-          >
-            <p style="font-weight: bold">cod. pedido</p>
-            <p style="font-weight: normal"><%= recibido.id %></p>
+        <section>
+          <div class="info">
+            <p>cod. pedido</p>
+            <p><%= recibido.id %></p>
           </div>
-          <div
-            style="
-              width: 100%;
-              height: 100%;
-              background-color: #15dbff;
-              color: #fff;
-              font-size: 16px;
-              padding: 16px;
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              text-transform: capitalize;
-            "
-          >
-            <p style="font-weight: bold">fecha de compra</p>
-            <p style="font-weight: normal">
+          <div class="info">
+            <p>fecha de compra</p>
+            <p>
               <% const d = new Date(recibido.createdAt);%>
               <%=d.toLocaleString('es-MX',{dateStyle:'full'});%>
             </p>
           </div>
         </section>
       </div>
-      <div
-        style="padding: 16px 0; display: flex; flex-direction: column; gap: 8px"
-      >
-        <h2
-          style="font-size: 24px; font-weight: bold; text-transform: uppercase"
-        >
-          productos solicitados
-        </h2>
+      <div class="products">
+        <h2>productos solicitados</h2>
         <% recibido.products.forEach((product)=>{ %>
 
-        <div
-          style="
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #15dbff;
-            width: 100%;
-            height: 120px;
-            gap: 16px;
-          "
-        >
+        <div class="product">
           <div style="max-width: 112px; max-height: 120px; flex-grow: 1">
             <img
               src="<%= product.image %>"
