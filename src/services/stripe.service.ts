@@ -63,21 +63,20 @@ async function callWebhook(body: any, sig: any) {
   eventType = event.type;
   data = event.data.object;
 
-  // if (eventType && eventType === "checkout.session.completed") {
-  //   const customer = await stripe.customers.retrieve(data.customer);
-  //   if (typeof !customer) throw new Error("NO_CONTENT");
-  //   const order = await callAddOrder(customer, data);
-  //   if (typeof order === "string") throw new Error("NO_CONTENT");
-  //   const sendEmailOk = await sendEmail(
-  //     JSON.stringify(order),
-  //     order.customerEmail,
-  //     "send-email-bill"
-  //   );
-  //   if (!sendEmailOk.id) throw new Error("NOT_IMPLEMENTED");
-  // }
+  if (eventType && eventType === "checkout.session.completed") {
+    const customer = await stripe.customers.retrieve(data.customer);
+    // if (typeof !customer) throw new Error("NO_CONTENT");
+    const order = await callAddOrder(customer, data);
+    if (typeof order === "string") throw new Error("NO_CONTENT");
+    const sendEmailOk = await sendEmail(
+      JSON.stringify(order),
+      order.customerEmail,
+      "send-email-bill"
+    );
+    if (!sendEmailOk.id) throw new Error("NOT_IMPLEMENTED");
+  }
 
-  // return { message: "created_webhook" };
-  return { eventType, data, sig };
+  return { message: "created_webhook" };
 }
 
 async function callAddOrder(customer: any, data: any) {
