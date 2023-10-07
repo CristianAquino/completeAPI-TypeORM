@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn src/index.ts",
-    "build": "tsc",
+    "build": "tsc && cp src/templates/send-email-bill.ejs dist/templates",
     "start": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
