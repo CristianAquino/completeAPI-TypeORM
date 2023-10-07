@@ -25,7 +25,7 @@ const sendEmailBillData = {
   ],
   subtotal: 100,
   total: 100,
-  descuento: 0,
+  discountPercentage: 0,
   customerName: "web",
   customerEmail: "ycristiantest@gmail.com",
   customerCountry: "PE",
