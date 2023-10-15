@@ -40,7 +40,8 @@ async function callCheckout(data: CheckoutType) {
     customer: customer.id,
     mode: "payment",
     payment_method_types: ["card"],
-    success_url: "https://personal-portfolio-chi-sandy.vercel.app/",
+    success_url:
+      "https://personal-portfolio-chi-sandy.vercel.app/proyects/ecommerce",
     cancel_url: "http://localhost:3000/",
   });
   if (!session) throw new Error("NOT_FOUND");
