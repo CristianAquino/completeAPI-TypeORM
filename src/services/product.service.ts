@@ -14,8 +14,8 @@ async function callAllProducts() {
 }
 
 async function callAddProduct(body: any) {
-  const products = new Product();
   for (const product of body) {
+    const products = new Product();
     const slugOfTitle = slug(product.name);
     products.name = product.name;
     products.unitPrice = product.unitPrice;
